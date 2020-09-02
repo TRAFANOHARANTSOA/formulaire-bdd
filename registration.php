@@ -1,8 +1,8 @@
 <?php include 'header.php' ?>
 <?php include 'connexion.php' ?>
 
-<p id='idp'>oulalala </p>
-<form action="registration.php" method='get'>
+
+<form action="registration.php" method='GET'>
   <div class="form-group">
     <label for="email">Email address</label>
     <input type="email" class="form-control" id="email" value="" placeholder="Enter email" required>
