@@ -16,9 +16,9 @@ if(isset($_POST['email']) && isset($_POST['password']) && isset($_POST['password
     $checkemail=emailVerif($email);
     $checkpassword=ckeckPassword($password, $passwordConfirm);
 
-    if($checkemail == true && $checkpassword == true){
-        //header('Location:index.php');
-        echo "ok";
+    if($checkemail == "Email correct" && $checkpassword == "Mot de passe correct"){
+      header('Location:userconnexion.php');
+
 
 
       //hachage mdp
@@ -27,7 +27,8 @@ if(isset($_POST['email']) && isset($_POST['password']) && isset($_POST['password
 
       $errors =[$checkemail, $checkpassword];
       $_SESSION ['errors'] = $errors;
-      //header('Location:registration.php');
+      var_dump($_SESSION['errors']);
+      header('Location:registration.php');
     }
 
   }
@@ -35,17 +36,16 @@ if(isset($_POST['email']) && isset($_POST['password']) && isset($_POST['password
 
 function emailVerif($email) {
   if (filter_var($email, FILTER_VALIDATE_EMAIL) && strlen($email)<=50){
-return true;
+return "Email correct";
   }
   else{
     return "Email non conforme";
   }
 }
 
-
 function ckeckPassword($password, $passwordConfirm){
 if(preg_match('/(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/', $password) && $password == $passwordConfirm){
-return  true;
+return  "Mot de passe correct";
 } else{
     return "Mot de passe  non conforme";
 }

@@ -1,6 +1,14 @@
 <?php include 'header.php' ?>
+<?php if(isset($_SESSION['errors'])) {
+
+  $errors=$_SESSION['errors'];
+
+  foreach($_SESSION['errors'] as $value)
+
+echo '<p>'.$value .'</p>';
 
 
+}?>
 
 
 <form action="traitement.php" method='POST' id="idform" onsubmit=" return validateregistration()">
