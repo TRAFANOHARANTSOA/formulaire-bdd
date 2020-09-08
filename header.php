@@ -8,4 +8,3 @@
       </script>
   </head>
   <body>
-<?php include 'connexion.php' ?>

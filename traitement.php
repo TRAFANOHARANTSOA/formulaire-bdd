@@ -1,6 +1,16 @@
-<?php session_start(); ?>
+<?php include 'header.php' ?>
 <?php
 $errors =[];
+require('model.php'); //récupère la page model.php
+
+if(isset($_POST['email']) && isset($_POST['password'])) {
+  $email=$_POST['email'];
+  $password= $_POST['password'];
+  $connexionresult = connectUser($email, $password);
+  if($connexionresult == 'connexion ok'){
+  header('Location:backoffice.php');
+}
+}
 
 if(isset($_POST['email']) && isset($_POST['password']) && isset($_POST['passwordconfirm'])) {
   if(!empty($_POST['email']) && !empty($_POST['password']) && !empty($_POST['passwordconfirm'])) {
@@ -16,18 +26,20 @@ if(isset($_POST['email']) && isset($_POST['password']) && isset($_POST['password
     $checkemail=emailVerif($email);
     $checkpassword=ckeckPassword($password, $passwordConfirm);
 
-    if($checkemail == "Email correct" && $checkpassword == "Mot de passe correct"){
+    if($checkemail == 1 && $checkpassword == 1){
+      $result=insertUser($email, $password);
+      if($result == 'ok'){
+         echo "New record created successfully";
+        header('Location:userconnexion.php');
+      } else{
+        $_SESSION ['errors'] = "Request not execute, please try aigain";
+        header('Location:registration.php');
+      }
       header('Location:userconnexion.php');
-
-
-
-      //hachage mdp
-      // insertion bdd
     } else{
 
       $errors =[$checkemail, $checkpassword];
       $_SESSION ['errors'] = $errors;
-      var_dump($_SESSION['errors']);
       header('Location:registration.php');
     }
 
@@ -36,7 +48,7 @@ if(isset($_POST['email']) && isset($_POST['password']) && isset($_POST['password
 
 function emailVerif($email) {
   if (filter_var($email, FILTER_VALIDATE_EMAIL) && strlen($email)<=50){
-return "Email correct";
+return 1;
   }
   else{
     return "Email non conforme";
@@ -45,7 +57,7 @@ return "Email correct";
 
 function ckeckPassword($password, $passwordConfirm){
 if(preg_match('/(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/', $password) && $password == $passwordConfirm){
-return  "Mot de passe correct";
+return  "1";
 } else{
     return "Mot de passe  non conforme";
 }
@@ -58,3 +70,4 @@ htmlspecialchars($input);
 return $input;
 }
  ?>
+<?php include 'footer.php' ?>

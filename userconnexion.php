@@ -2,7 +2,7 @@
 
 
 
-<form  id="iduserconnexion">
+<form  action="traitement.php" method="POST" id="iduserconnexion">
 
   <div class="form-group ml-5 mr-5 mt-5">
     <label for="exampleInputEmail1">Email address</label>
